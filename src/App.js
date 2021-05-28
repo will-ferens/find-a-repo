@@ -1,10 +1,14 @@
+import SearchInput from './components/SearchInput'
+import styled from 'styled-components'
 
+export const Global = styled.div`
 
+`
 function App() {
   return (
-    <div className="App">
-      
-    </div>
+    <Global>
+      <SearchInput />
+    </Global>
   );
 }
 
