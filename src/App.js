@@ -1,19 +1,16 @@
-import Header from './components/Header'
-import Search from './components/Search'
-import styled from 'styled-components'
+import Home from './components/Home'
+import ResultPage from './components/ResultPage'
 
-export const Global = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`
+import { BrowserRouter as Router,  Route, } from 'react-router-dom'
+
+
 
 function App() {
   return (
-    <Global>
-      <Header />
-      <Search />
-    </Global>
+    <Router>
+      <Route exact path="/" component={Home} />
+      <Route path="/repo/:repoId" component={ResultPage} />
+    </Router>
   );
 }
 
