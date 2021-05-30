@@ -13,6 +13,7 @@ export const SearchContainer = styled.section`
 export const OptionsContainer = styled.div`
     display: flex;
     justify-content: space-between;
+    margin: 32px 0;
 `
 
 const initialState = {

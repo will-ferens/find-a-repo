@@ -1,10 +1,9 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 import Dropdown from './Dropdown'
 
 const Filters = ({ results, setLanguage }) => {
-    const [selected, setSelected] = useState({})
-    
+
     let languageFilters
     if(results && results.length > 0) {
         let arrayOfLanguages = results.map((result) => {

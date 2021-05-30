@@ -49,7 +49,7 @@ const SearchInput = ({ setResults, setLoading }) => {
 
     return (
         <FormWrapper>
-            <form className="search-form" onSubmit={handleSubmit}>
+            <Form onSubmit={handleSubmit}>
                 <TextInput 
                     type="text"
                     value={term}
@@ -58,7 +58,7 @@ const SearchInput = ({ setResults, setLoading }) => {
                 <SubmitInput 
                     type="submit"
                 />
-            </form>
+            </Form>
         </FormWrapper>
     )
 }
