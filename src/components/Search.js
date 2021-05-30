@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import SearchInput from './SearchInput'
 import ResultsList from './ResultsList'
 import Filters from './Filters'
+import Sort from './Sort'
 
 export const SearchContainer = styled.section`
 
@@ -12,7 +13,7 @@ const initialState = {
     loading: true,
     filterActive: false,
     error: '',
-    results: [],
+    results: JSON.parse(localStorage.getItem('searchResults')) || [],
     filteredResults: []
 }
 const reducer = (state, action) => {
@@ -30,6 +31,24 @@ const reducer = (state, action) => {
                 ...state,
                 filterActive: true,
                 filteredResults: filtered
+            }
+        case 'sort':
+            if(state.filterActive) {
+                const sortedResults = state.filteredResults.sort((a, b) => b.stargazers_count - a.stargazers_count)
+                return {
+                    ...state,
+                    filteredResults: sortedResults
+                }
+            }
+            const sortedResults = state.results.sort((a, b) => b.stargazers_count - a.stargazers_count)
+            return {
+                ...state,
+                results: sortedResults
+            }
+        case 'default':
+            return {
+                ...state,
+                results: JSON.parse(localStorage.getItem('searchResults'))
             }
         default:
             return state
@@ -49,6 +68,9 @@ const Search = (props) => {
             <Filters 
                 results={state.results}
                 setLanguage={dispatch}
+            />
+            <Sort 
+                sortResults={dispatch}
             />
             <ResultsList 
                 loading={loading}

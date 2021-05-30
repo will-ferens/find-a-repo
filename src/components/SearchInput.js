@@ -41,6 +41,7 @@ const SearchInput = ({ setResults, setLoading }) => {
                     type: 'search',
                     searchResults: response.items
                 })
+                localStorage.setItem('searchResults', JSON.stringify(response.items))
                 setLoading(false)
             })
             .catch(error => console.log(error))
