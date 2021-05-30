@@ -7,6 +7,23 @@ export const List = styled.ul`
 `
 
 const ResultsList = ({ results, filterActive, filteredResults }) => {
+    if(filterActive) {
+        return (
+            <List>
+                {
+                    filteredResults ? filteredResults.map((result) => {
+                        return (
+                            <li key={result.id}>
+                                <Link to={`/repo/${result.id}`}>
+                                    {result.name}
+                                </Link>
+                            </li>
+                        ) 
+                    }) : null
+                }
+            </List>
+        )
+    }
         return (
             <List>
                 {

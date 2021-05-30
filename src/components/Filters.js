@@ -38,7 +38,8 @@ const Filters = ({ results, setLanguage }) => {
                             {language ? language : 'Not Specified'}
                         </LanguageItem>
                     )
-                }) : null
+                }) 
+                : null
             }
             </LanguageList>
         </FiltersContainer>
