@@ -9,6 +9,12 @@ import Sort from './Sort'
 export const SearchContainer = styled.section`
 
 `
+
+export const OptionsContainer = styled.div`
+    display: flex;
+    justify-content: space-between;
+`
+
 const initialState = {
     loading: true,
     filterActive: false,
@@ -26,7 +32,7 @@ const reducer = (state, action) => {
                 error: ''
             }
         case 'filter':
-            const filtered = state.results.filter((result) => result.language === action.language)
+            const filtered = state.results.filter((result) => result.language === action.name)
             return {
                 ...state,
                 filterActive: true,
@@ -65,13 +71,15 @@ const Search = (props) => {
                 setLoading={setLoading} 
                 setResults={dispatch} 
             />
-            <Filters 
-                results={state.results}
-                setLanguage={dispatch}
-            />
-            <Sort 
-                sortResults={dispatch}
-            />
+            <OptionsContainer>
+                <Filters 
+                    results={state.results}
+                    setLanguage={dispatch}
+                />
+                <Sort 
+                    sortResults={dispatch}
+                />
+            </OptionsContainer>
             <ResultsList 
                 loading={loading}
                 results={state.results}
