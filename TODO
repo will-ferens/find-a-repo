@@ -1,0 +1,21 @@
+[ ] API Call
+    [x] initiate call
+    [x] get search term from input
+    [ ] validate search term
+    [ ] style form
+    [ ] comment!!!
+[ ] ResultsList component
+    [x] display results
+    [x] create page for each result
+    [ ] display relevant result info
+    [ ] style list
+    [ ] comment!!!
+[ ] Filter, Sort functionality
+    [x] Filter by language
+    [x] Sort
+    [ ] Create reusable dropdown component
+    [ ] Style
+    [ ] comment!!!
+[ ] Test coverage
+[ ] Launch?
+[ ] Refactor
