@@ -9,6 +9,7 @@ export const Global = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin: 24px;
 `
 
 const Home = ({ selectedResult, setSelectedResult}) => {

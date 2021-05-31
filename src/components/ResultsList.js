@@ -2,6 +2,9 @@ import React from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
+import Svg from './Svg'
+
+import * as icons from '../constants/icons.js'
 import * as theme from '../constants/theme.js'
 
 export const List = styled.ul`
@@ -44,12 +47,17 @@ const ListItem = ({ result, setSelectedResult }) => {
             } >
             <Link to={`/repo/${result.id}`}>
                 <ItemHeader>
-                    {result.owner.login} / {result.name}
+                    {result.full_name}
                 </ItemHeader>
                 <ItemDetails>
-                    <span>⭐️ { result.stargazers_count }</span>
+                    <span>
+                        <Svg icon={icons.Star} />
+                        { result.stargazers_count }
+                    </span>
                     <span>{ result.language }</span>
-                    <span>{ result.private ? '🔒' : '📖'}</span>
+                    <span>
+                        { result.private ? <Svg icon={icons.Private} /> : <Svg icon={icons.Public} /> }
+                    </span>
                 </ItemDetails>
             </Link>
         </ListItemWrapper>
