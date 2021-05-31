@@ -2,6 +2,8 @@ import React from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
+import * as theme from '../constants/theme.js'
+
 export const List = styled.ul`
     list-style: none;
     margin: 0;
@@ -10,8 +12,8 @@ export const List = styled.ul`
 export const ListItemWrapper = styled.li`
     margin: 0;
     padding: 12px;
-    border-radius: 10px;
-    box-shadow: 0 5px 7px -1px rgba(51, 51, 51, 0.23);
+    border-radius: ${theme.borderRadius};
+    box-shadow:${theme.boxShadow};
     a {
         color: #333;
         text-decoration: none;
@@ -20,6 +22,8 @@ export const ListItemWrapper = styled.li`
 
 export const ItemHeader = styled.div`
     padding-bottom: 6px;
+    color: ${theme.accentColor};
+    font-weight: bold;
 `
 
 export const ItemDetails = styled.div`
@@ -28,9 +32,16 @@ export const ItemDetails = styled.div`
     align-items: center;
 `
 
-const ListItem = ({ result }) => {
+const ListItem = ({ result, setSelectedResult }) => {
     return (
-        <ListItemWrapper key={result.id}>
+        <ListItemWrapper 
+            onClick={
+                () => {
+                    setSelectedResult({type: 'select', result: result})
+                    localStorage.setItem('selectedResult', JSON.stringify(result))
+                }
+
+            } >
             <Link to={`/repo/${result.id}`}>
                 <ItemHeader>
                     {result.owner.login} / {result.name}
@@ -45,14 +56,18 @@ const ListItem = ({ result }) => {
     )
 }
 
-const ResultsList = ({ results, filterActive, filteredResults }) => {
+const ResultsList = ({ results, filterActive, filteredResults , setSelectedResult }) => {
     if(filterActive) {
         return (
             <List>
                 {
                     filteredResults ? filteredResults.map((result) => {
                         return (
-                            <ListItem result={result} />
+                            <ListItem 
+                                setSelectedResult={setSelectedResult}
+                                key={result.id} 
+                                result={result} 
+                            />
                         ) 
                     }) : null
                 }
@@ -64,7 +79,11 @@ const ResultsList = ({ results, filterActive, filteredResults }) => {
             {
                 results ? results.map((result) => {
                     return (
-                        <ListItem result={result} />
+                        <ListItem 
+                            setSelectedResult={setSelectedResult}
+                            key={result.id} 
+                            result={result} 
+                        />
                     ) 
                 }) : null
             }

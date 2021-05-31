@@ -23,6 +23,7 @@ const initialState = {
     results: JSON.parse(localStorage.getItem('searchResults')) || [],
     filteredResults: []
 }
+
 const reducer = (state, action) => {
     switch (action.type) {
         case 'search':
@@ -61,7 +62,7 @@ const reducer = (state, action) => {
             return state
     }
 }
-const Search = (props) => {
+const Search = ({ setSelectedResult }) => {
     
     const [loading, setLoading] = useState(true)
     const [state, dispatch] = useReducer(reducer, initialState)
@@ -86,6 +87,7 @@ const Search = (props) => {
                 results={state.results}
                 filterActive={state.filterActive}
                 filteredResults={state.filteredResults}
+                setSelectedResult={setSelectedResult}
             />
         </SearchContainer>
     )
