@@ -66,6 +66,10 @@ const SearchInput = ({ setResults, setLoading }) => {
                     type: 'search',
                     searchResults: response.items
                 })
+                if(localStorage.getItem('searchResults') !== null) {
+                    localStorage.removeItem('searchResults')
+                }
+                console.log('howdy')
                 localStorage.setItem('searchResults', JSON.stringify(response.items))
                 setLoading(false)
             })
