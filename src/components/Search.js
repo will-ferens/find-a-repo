@@ -60,7 +60,14 @@ const reducer = (state, action) => {
                     results: JSON.parse(localStorage.getItem('searchResults'))
                 }
             }
-            const filtered = state.results.filter((result) => result.language === action.name)
+            const filtered = state.results.filter((result) =>  {
+                //If no language is specified, fill in with 'None' value
+                if(result.language === null) {
+                    result.language = 'None'
+                }
+                return result.language === action.name
+            })
+            // Toggle filter state for dropdown menu
             return {
                 ...state,
                 filterActive: true,
@@ -68,7 +75,9 @@ const reducer = (state, action) => {
                 filteredResults: filtered
             }
         case 'sort':
+            // Sort by most stars
             if(state.filterActive) {
+                // If filter active, use filteredResults
                 const sortedResults = state.filteredResults.sort((a, b) => b.stargazers_count - a.stargazers_count)
                 return {
                     ...state,
@@ -81,17 +90,23 @@ const reducer = (state, action) => {
                 results: sortedResults
             }
         case 'default':
+            // If default sort, return original results list
             return {
                 ...state,
+                loading: false,
                 results: JSON.parse(localStorage.getItem('searchResults'))
             }
         default:
-            return state
+            return {
+                ...state,
+                loading: false,
+                results: JSON.parse(localStorage.getItem('searchResults')) || []
+            }
     }
 }
 const Search = ({ setSelectedResult }) => {
     
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(false)
     const [state, dispatch] = useReducer(reducer, initialState)
 
     return (
@@ -104,23 +119,28 @@ const Search = ({ setSelectedResult }) => {
                     setLoading={setLoading} 
                     setResults={dispatch} 
                 />
-                <OptionsContainer>
-                    <Filters 
-                        results={state.results}
-                        setLanguage={dispatch}
-                    />
-                    <Sort 
-                        results={state.results}
-                        sortResults={dispatch}
-                    />
-                </OptionsContainer>
-                <ResultsList 
-                    loading={loading}
-                    results={state.results}
-                    filterActive={state.filterActive}
-                    filteredResults={state.filteredResults}
-                    setSelectedResult={setSelectedResult}
-                />
+                {
+                    loading ? <p>Loading...</p> :
+                    <div>
+                        <OptionsContainer>
+                            <Filters 
+                                results={state.results}
+                                setLanguage={dispatch}
+                            />
+                            <Sort 
+                                results={state.results}
+                                sortResults={dispatch}
+                            />
+                        </OptionsContainer>
+                        <ResultsList 
+                            results={state.results}
+                            filterActive={state.filterActive}
+                            filteredResults={state.filteredResults}
+                            setSelectedResult={setSelectedResult}
+                        />
+                    </div>
+                }
+                
             </SearchWrapper>
         </SearchContainer>
     )

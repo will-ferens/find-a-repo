@@ -1,7 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react'
 import styled from 'styled-components'
 
-import * as theme from '../constants/theme'
+import Svg from './Svg'
+
+import * as icons from '../constants/icons.js'
+import * as theme from '../constants/theme.js'
 
 export const DropdownContainer = styled.div`
     position: relative;
@@ -26,29 +29,55 @@ export const DropdownItemsWrapper = styled.div`
     
 `
 export const DropdownItem = styled.div`
-    padding: 8px 8px 8px 16px;
+    padding: 8px 8px 8px 24px;
     cursor: pointer;
+    position: relative;
+    &:first-child {
+        border-radius: ${theme.borderRadius};
+        border-bottom-right-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+    &:last-child {
+        border-radius: ${theme.borderRadius};
+        border-top-right-radius: 0;
+        border-top-left-radius: 0;
+    }
+    svg {
+        position: absolute;
+        left: 4px;
+        top: 8px;
+    }
+    &:hover {
+        background: #C8F3F7;
+    }
+    &.selected {
+        background: ${theme.grey};
+    }
 `
 
 const Dropdown = ({ title, dropdownOptions, dispatch }) => {
     const [open, setOpen] = useState(false)
+    const [selected, setSeleced] = useState({})
+
     const ref = useRef()
     
+    const checkViewBox = '0 0 24 24'
+
     useEffect(() => {
         const onBodyClick = event => {
-          // check if element that was clicked is inside of ref'd component
-          // if so no action is required from this event listener so exit
+          // Check if element that was clicked is inside of ref'd component
+          // If so no action is required from this event listener so exit
         if (ref.current && ref.current.contains(event.target)) {
             return
         }
-          // else close the dropdown
+          // Else close the dropdown
             setOpen(false)
         }
     
-        // add event listener
+        // Add event listener
         document.body.addEventListener("click", onBodyClick)
     
-        // remove event listener, avoid ref null error
+        // Remove event listener to avoid ref null error
         return () => {
             document.body.removeEventListener("click", onBodyClick)
         }
@@ -68,12 +97,15 @@ const Dropdown = ({ title, dropdownOptions, dispatch }) => {
                                             type: option.type,
                                             name: option.name
                                         })
+                                        setSeleced(selected.name === option.name ? {} : option)
                                         setOpen(!open)
                                     }
                                 }
                                 key={option.name}
+                                className={selected.name === option.name ? 'selected' : ''}
                             >
-                                {option.name}
+                                { selected.name === option.name ? <Svg icon={icons.Check} viewBox={checkViewBox} /> : null }
+                                { option.name }
                             </DropdownItem>
                         )
                     })

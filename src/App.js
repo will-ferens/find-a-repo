@@ -1,10 +1,11 @@
 import React, { useReducer } from 'react'
 
 import Search from './components/Search'
-import ResultPage from './components/ResultPage'
+import Details from './components/Details'
 
 import { BrowserRouter as Router,  Route, } from 'react-router-dom'
 
+// Find selected Result if available
 const initialState = {
 	selectedResult: JSON.parse(localStorage.getItem('selectedResult')) || {}
 }
@@ -41,7 +42,7 @@ function App() {
 			<Route 
 				path="/repo/:repoId" 
 				render={() => (
-					<ResultPage 
+					<Details 
 						result={selectedResult.selectedResult}
 					/>
 				)} 

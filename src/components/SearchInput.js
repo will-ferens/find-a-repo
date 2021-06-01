@@ -72,8 +72,9 @@ const SearchInput = ({ setResults, setLoading }) => {
         } else if(input.length >= 256) {
             setErrors({long: 'Search term must be less than 256 characters! Sheesh.'})
         } else {
-            // Empty errors object and run search
+            // Empty errors object, set loading to true, and run search
             setErrors({})
+            setLoading(true)
             fetch(
                 `${REPOSITORY_API_URL}?q=${term}`,
                 {
@@ -95,7 +96,10 @@ const SearchInput = ({ setResults, setLoading }) => {
                     localStorage.setItem('searchResults', JSON.stringify(response.items))
                     setLoading(false)
                 })
-                .catch(error => console.log(error))
+                .catch(error => {
+                    setErrors({network: error.message})
+                    console.log(errors)
+                })
         }
     }
 
@@ -114,6 +118,7 @@ const SearchInput = ({ setResults, setLoading }) => {
             <ErrorMessage>
                 <p>{ errors.empty ? errors.empty : null}</p>
                 <p>{ errors.long ? errors.long : null}</p>
+                <p>{ errors.network ? errors.network : null}</p>
             </ErrorMessage>
         </FormWrapper>
     )

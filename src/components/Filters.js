@@ -15,7 +15,7 @@ const Filters = ({ results, setLanguage }) => {
         languageFilters = [...new Set (arrayOfLanguages)]
         
         // Create language filter array of objects, filling in 'None' for null field
-        languageFilters = languageFilters.map((language) => ({ name: language, type: 'filter'}))
+        languageFilters = languageFilters.map((language) => ({ name: language ? language : 'None', type: 'filter'}))
         
         return (
             <Dropdown 
