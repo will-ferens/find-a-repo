@@ -1,7 +1,6 @@
 import React, { useState, useReducer, } from 'react'
 import styled from 'styled-components'
 
-import Header from './Header'
 import SearchInput from './SearchInput'
 import ResultsList from './ResultsList'
 import Filters from './Filters'
@@ -14,6 +13,20 @@ export const SearchContainer = styled.section`
     margin: 24px;
 `
 
+export const SearchWrapper = styled.div`
+    @media (min-width: 960px) {
+        width: 420px;
+    }
+    @media (max-width: 540px) {
+        width: 300px;
+    }
+`
+export const HeaderContainer = styled.header`
+
+`
+export const HeaderTitle = styled.h1`
+    text-align: center;
+`
 export const OptionsContainer = styled.div`
     display: flex;
     justify-content: space-between;
@@ -25,7 +38,7 @@ const initialState = {
     filterActive: false,
     filter: '',
     results: JSON.parse(localStorage.getItem('searchResults')) || [],
-    filteredResults: []
+    filteredResults: [],
 }
 
 const reducer = (state, action) => {
@@ -59,7 +72,7 @@ const reducer = (state, action) => {
                 const sortedResults = state.filteredResults.sort((a, b) => b.stargazers_count - a.stargazers_count)
                 return {
                     ...state,
-                    filteredResults: sortedResults
+                    filteredResults: sortedResults,
                 }
             }
             const sortedResults = state.results.sort((a, b) => b.stargazers_count - a.stargazers_count)
@@ -83,28 +96,32 @@ const Search = ({ setSelectedResult }) => {
 
     return (
         <SearchContainer>
-            <Header />
-            <SearchInput 
-                setLoading={setLoading} 
-                setResults={dispatch} 
-            />
-            <OptionsContainer>
-                <Filters 
-                    results={state.results}
-                    setLanguage={dispatch}
+            <SearchWrapper>
+                <HeaderContainer>
+                    <HeaderTitle>Find a Repo</HeaderTitle>
+                </HeaderContainer>
+                <SearchInput 
+                    setLoading={setLoading} 
+                    setResults={dispatch} 
                 />
-                <Sort 
+                <OptionsContainer>
+                    <Filters 
+                        results={state.results}
+                        setLanguage={dispatch}
+                    />
+                    <Sort 
+                        results={state.results}
+                        sortResults={dispatch}
+                    />
+                </OptionsContainer>
+                <ResultsList 
+                    loading={loading}
                     results={state.results}
-                    sortResults={dispatch}
+                    filterActive={state.filterActive}
+                    filteredResults={state.filteredResults}
+                    setSelectedResult={setSelectedResult}
                 />
-            </OptionsContainer>
-            <ResultsList 
-                loading={loading}
-                results={state.results}
-                filterActive={state.filterActive}
-                filteredResults={state.filteredResults}
-                setSelectedResult={setSelectedResult}
-            />
+            </SearchWrapper>
         </SearchContainer>
     )
 }
