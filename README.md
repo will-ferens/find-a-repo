@@ -3,7 +3,7 @@
 ## Instructions
 
 1. Clone this repository:
-`$ git clone https://github.com/Ywill-ferens/hotel-engine`
+`$ git clone https://github.com/will-ferens/hotel-engine`
 2. Install dependencies:
 `$ npm install`
 3. Run locally:
