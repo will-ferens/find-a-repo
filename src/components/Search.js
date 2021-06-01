@@ -1,13 +1,17 @@
 import React, { useState, useReducer, } from 'react'
 import styled from 'styled-components'
 
+import Header from './Header'
 import SearchInput from './SearchInput'
 import ResultsList from './ResultsList'
 import Filters from './Filters'
 import Sort from './Sort'
 
 export const SearchContainer = styled.section`
-
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 24px;
 `
 
 export const OptionsContainer = styled.div`
@@ -17,9 +21,9 @@ export const OptionsContainer = styled.div`
 `
 
 const initialState = {
-    loading: true,
+    loading: false,
     filterActive: false,
-    error: '',
+    filter: '',
     results: JSON.parse(localStorage.getItem('searchResults')) || [],
     filteredResults: []
 }
@@ -31,13 +35,23 @@ const reducer = (state, action) => {
                 ...state,
                 loading: false,
                 results: action.searchResults,
-                error: ''
             }
         case 'filter':
+            // Check for active filter; if present, return original results
+            if(action.name === state.filter) {
+                return {
+                    ...state,
+                    filterActive: false,
+                    filter: '',
+                    filteredResults: [],
+                    results: JSON.parse(localStorage.getItem('searchResults'))
+                }
+            }
             const filtered = state.results.filter((result) => result.language === action.name)
             return {
                 ...state,
                 filterActive: true,
+                filter: action.name,
                 filteredResults: filtered
             }
         case 'sort':
@@ -69,6 +83,7 @@ const Search = ({ setSelectedResult }) => {
 
     return (
         <SearchContainer>
+            <Header />
             <SearchInput 
                 setLoading={setLoading} 
                 setResults={dispatch} 
@@ -79,6 +94,7 @@ const Search = ({ setSelectedResult }) => {
                     setLanguage={dispatch}
                 />
                 <Sort 
+                    results={state.results}
                     sortResults={dispatch}
                 />
             </OptionsContainer>

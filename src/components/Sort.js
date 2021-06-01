@@ -1,11 +1,8 @@
 import React from 'react'
-import styled from 'styled-components'
 
 import Dropdown from './Dropdown'
 
-export const SortContainer = styled.div``
-export const SortItem = styled.div``
-
+// Define sort options
 const sortOptions = [
     {
         name: 'Best Match',
@@ -19,14 +16,18 @@ const sortOptions = [
     }
 ]
 
-const Sort = ({ sortResults }) => {
-    return (
-        <Dropdown 
-            dropdownOptions={sortOptions}
-            dispatch={sortResults}
-            title={'Sort By'}
-        />
-    )
+const Sort = ({ results, sortResults }) => {
+    // Ensure results exist before render
+    if(results && results.length > 0) {
+        return (
+            <Dropdown 
+                dropdownOptions={sortOptions}
+                dispatch={sortResults}
+                title={'Sort By'}
+            />
+        )
+    }
+    return null
 }
 
 export default Sort

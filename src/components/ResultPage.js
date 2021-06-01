@@ -55,55 +55,61 @@ export const RepoStats = styled.div`
 `
 
 const ResultPage = ({ result }) => {
-    return(
-        <ResultContainer>
-            <Link to={'/'}>back</Link>
-            <ResultCard>
-                <ResultHeader>
-                    <Avatar src={ result.owner.avatar_url } />
-                    <h2>{ result.full_name }</h2>
-                    <a href={ result.html_url }>See the repo</a>
-                </ResultHeader>
-                <ResultDetails>
-                    <RepoStats>
-                        <Svg icon={icons.Fork} />
-                        <span>
-                            { result.forks_count }
-                        </span>
-                        <span>
-                            Forks
-                        </span>
-                    </RepoStats>
-                    <RepoStats>
-                        <Svg icon={icons.Watcher} />
-                        <span>
-                            { result.watchers_count }
-                        </span>
-                        <span>
-                            Watchers
-                        </span>
-                    </RepoStats>
-                    <RepoStats>
-                        <Svg icon={icons.Issue} />
-                        <span>
-                            { result.open_issues_count }
-                        </span>
-                        <span>
-                            Open Issues
-                        </span>
-                    </RepoStats>
-                    <RepoStats>
-                        { result.private ? <Svg icon={icons.Private} /> : <Svg icon={icons.Public} /> }
-                        <span>
-                            { result.private ? 'Private Repo' : 'Public Repo'}
-                        </span>
-                    </RepoStats>
-                    <p>{ result.language }</p>
-                    <p>{ result.description }</p>
-                </ResultDetails>
-            </ResultCard>
-        </ResultContainer>
-    )
+    // Defensive coding! 
+    // Not sure how there'd be no result before render, but that doesn't mean the case doesn't exist
+    if(result) {
+        return(
+            <ResultContainer>
+                <Link to={'/'}>back</Link>
+                <ResultCard>
+                    <ResultHeader>
+                        <Avatar src={ result.owner.avatar_url } />
+                        <h2>{ result.full_name }</h2>
+                        <a href={ result.html_url }>See the repo</a>
+                    </ResultHeader>
+                    <ResultDetails>
+                        <RepoStats>
+                            <Svg icon={icons.Fork} />
+                            <span>
+                                { result.forks_count }
+                            </span>
+                            <span>
+                                Forks
+                            </span>
+                        </RepoStats>
+                        <RepoStats>
+                            <Svg icon={icons.Watcher} />
+                            <span>
+                                { result.watchers_count }
+                            </span>
+                            <span>
+                                Watchers
+                            </span>
+                        </RepoStats>
+                        <RepoStats>
+                            <Svg icon={icons.Issue} />
+                            <span>
+                                { result.open_issues_count }
+                            </span>
+                            <span>
+                                Open Issues
+                            </span>
+                        </RepoStats>
+                        <RepoStats>
+                            { result.private ? <Svg icon={icons.Private} /> : <Svg icon={icons.Public} /> }
+                            <span>
+                                { result.private ? 'Private Repo' : 'Public Repo'}
+                            </span>
+                        </RepoStats>
+                        <p>{ result.language }</p>
+                        <p>{ result.description }</p>
+                    </ResultDetails>
+                </ResultCard>
+            </ResultContainer>
+        )
+    } 
+
+    return null
 }
 
 export default ResultPage
