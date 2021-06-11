@@ -1,24 +1,24 @@
 [ ] API Call
     [x] initiate call
     [x] get search term from input
-    [ ] validate search term
-    [ ] style form
-    [ ] comment!!!
+    [x] validate search term
+    [x] style form
+    [x] comment!!!
 [ ] ResultsList component
     [x] display results
     [x] create page for each result
     [x] display relevant result info
     [x] style list
-    [ ] comment!!!
+    [x] comment!!!
 [ ] Filter, Sort functionality
     [x] Filter by language
     [x] Sort
     [x] Create reusable dropdown component
     [x] Style
-    [ ] de-select filter
+    [x] de-select filter
     [ ] default sort on filtered results
-    [ ] comment!!!
+    [x] comment!!!
 [ ] Test coverage
 [ ] Launch?
 [ ] Refactor
-    [ ] Troubleshoot back button (why save initial search)
+    [x] Troubleshoot back button (why save initial search)
